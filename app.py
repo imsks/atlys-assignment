@@ -9,10 +9,10 @@ from cache import InMemoryCache
 app = FastAPI()
 
 # Static token for authentication
-API_TOKEN = "MY_STATIC_TOKEN"
+API_TOKEN = "AtlysAssignmentBySachin"
 
-def verify_token(x_token: str = Header(...)):
-    if x_token != API_TOKEN:
+def verify_token(token: str = Header(...)):
+    if token != API_TOKEN:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or missing API token."
