@@ -8,7 +8,6 @@ from cache import InMemoryCache
 
 app = FastAPI()
 
-# Static token for authentication
 API_TOKEN = "AtlysAssignmentBySachin"
 
 def verify_token(token: str = Header(...)):
@@ -28,13 +27,6 @@ def start_scraping(
     proxy: Optional[str] = None,
     token: str = Depends(verify_token)
 ):
-    """
-    Endpoint to trigger scraping.
-    - limit_pages: limit the number of pages to scrape from the website.
-    - proxy: optionally pass in a proxy string to use for scraping.
-    - token: static token for authentication (from Header).
-    """
-    # Prepare config
     config = ScraperConfig(
         limit_pages=limit_pages,
         proxy=proxy,
@@ -42,12 +34,10 @@ def start_scraping(
         retry_backoff=2
     )
     
-    # Initialize dependencies
     storage_strategy = JSONFileStorage(file_path="database.json")
     notification_strategy = ConsoleNotification()
     cache = InMemoryCache()
 
-    # Create scraper with dependencies
     scraper = Scraper(
         config=config,
         storage=storage_strategy,
@@ -55,7 +45,6 @@ def start_scraping(
         cache=cache
     )
 
-    # Perform scraping
     scraper.scrape()
     
     return {"message": "Scraping initiated."}

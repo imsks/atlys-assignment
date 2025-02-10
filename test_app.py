@@ -11,7 +11,7 @@ def test_healthcheck():
 
 def test_scrape_unauthorized():
     response = client.post("/scrape")
-    assert response.status_code == 422  # missing header -> 422 because token not provided
+    assert response.status_code == 422
 
 def test_scrape_authorized():
     headers = {"token": API_TOKEN}
